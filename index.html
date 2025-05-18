@@ -64,7 +64,7 @@
     <h1>💬 PAVA — Анонимная форма</h1>
     <form id="pavaForm">
       <textarea name="message" placeholder="Ваше сообщение или идея" required></textarea>
-      <input type="text" name="nickname" placeholder="Ваш Telegram-ник (Обязательно)">
+      <input type="text" name="nickname" placeholder="Ваш Telegram-ник (обязательно)" required>
       <button type="submit">Отправить</button>
     </form>
     <p id="status"></p>
@@ -77,8 +77,8 @@
     document.getElementById("pavaForm").addEventListener("submit", function(e) {
       e.preventDefault();
 
-      const message = this.message.value;
-      const nickname = this.nickname.value || "не указан";
+      const message = this.message.value.trim();
+      const nickname = this.nickname.value.trim() || "не указан";
       const text = `📩 Новое сообщение с формы PAVA:\n\n💬 ${message}\n\n👤 Никнейм: ${nickname}`;
 
       fetch(`https://api.telegram.org/bot${TOKEN}/sendMessage`, {
@@ -104,3 +104,4 @@
   </script>
 </body>
 </html>
+
