@@ -64,7 +64,7 @@
     <h1>💬 PAVA — Анонимная форма</h1>
     <form id="pavaForm">
       <textarea name="message" placeholder="Ваше сообщение или идея" required></textarea>
-      <input type="text" name="nickname" placeholder="Ваш Telegram-ник (обязательно)" required>
+      <input type="text" name="nickname" placeholder="Ваш Telegram-ник (необязательно)">
       <button type="submit">Отправить</button>
     </form>
     <p id="status"></p>
@@ -72,7 +72,7 @@
 
   <script>
     const TOKEN = "7744031571:AAFvrWAPYn5e2i9_nwkQKw_rRw8FxAhU-hw";
-    const CHAT_ID = "6766278529";
+    const CHAT_ID = "6766278529"; // ← твой правильный chat_id
 
     document.getElementById("pavaForm").addEventListener("submit", function(e) {
       e.preventDefault();
@@ -93,8 +93,12 @@
       })
       .then(res => res.json())
       .then(data => {
-        document.getElementById("status").innerText = "✅ Сообщение отправлено!";
-        this.reset();
+        if (data.ok) {
+          document.getElementById("status").innerText = "✅ Сообщение отправлено!";
+          document.getElementById("pavaForm").reset();
+        } else {
+          document.getElementById("status").innerText = "❌ Ошибка Telegram API: " + data.description;
+        }
       })
       .catch(err => {
         document.getElementById("status").innerText = "❌ Ошибка отправки.";
@@ -104,4 +108,3 @@
   </script>
 </body>
 </html>
-
